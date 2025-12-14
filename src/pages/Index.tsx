@@ -128,7 +128,7 @@ const Index = () => {
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
               <Icon name="Rocket" size={24} className="text-white" />
             </div>
-            <span className="text-2xl font-bold font-montserrat gradient-text">AI Dev Platform</span>
+            <span className="text-2xl font-bold font-montserrat gradient-text">WebSynapse</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <a href="#features" className="text-foreground/80 hover:text-foreground transition-colors">Возможности</a>

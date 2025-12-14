@@ -24,7 +24,7 @@ const Login = () => {
         localStorage.setItem('user', JSON.stringify({ email, name: 'Разработчик' }));
         toast({
           title: "Вход выполнен",
-          description: "Добро пожаловать в AI Dev Platform!",
+          description: "Добро пожаловать в WebSynapse!",
         });
         navigate('/dashboard');
       } else {
@@ -54,7 +54,7 @@ const Login = () => {
           </div>
           <CardTitle className="text-3xl font-montserrat gradient-text">Вход</CardTitle>
           <CardDescription className="text-base">
-            Войдите в свой аккаунт AI Dev Platform
+            Войдите в свой аккаунт WebSynapse
           </CardDescription>
         </CardHeader>
         <CardContent>

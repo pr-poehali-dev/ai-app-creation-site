@@ -36,7 +36,7 @@ const Register = () => {
         localStorage.setItem('user', JSON.stringify({ email, name }));
         toast({
           title: "Регистрация успешна!",
-          description: "Добро пожаловать в AI Dev Platform!",
+          description: "Добро пожаловать в WebSynapse!",
         });
         navigate('/dashboard');
       } else {

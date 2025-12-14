@@ -147,7 +147,7 @@ const Dashboard = () => {
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                 <Icon name="FolderKanban" size={20} className="text-white" />
               </div>
-              <span className="text-xl font-bold font-montserrat gradient-text">Мои проекты</span>
+              <span className="text-xl font-bold font-montserrat gradient-text">WebSynapse</span>
             </div>
           </div>
           <div className="flex items-center gap-3">
