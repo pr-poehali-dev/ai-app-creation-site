@@ -26,7 +26,7 @@ const Login = () => {
           title: "Вход выполнен",
           description: "Добро пожаловать в AI Dev Platform!",
         });
-        navigate('/editor');
+        navigate('/dashboard');
       } else {
         toast({
           title: "Ошибка",

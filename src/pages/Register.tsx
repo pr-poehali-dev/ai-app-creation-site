@@ -38,7 +38,7 @@ const Register = () => {
           title: "Регистрация успешна!",
           description: "Добро пожаловать в AI Dev Platform!",
         });
-        navigate('/editor');
+        navigate('/dashboard');
       } else {
         toast({
           title: "Ошибка",

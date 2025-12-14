@@ -29,7 +29,7 @@ const CodeEditor = () => {
     }
   }, [navigate]);
 
-  const handleAIGenerate = () => {
+  const handleAIGenerate = async () => {
     if (!aiPrompt.trim()) {
       toast({
         title: "Ошибка",
@@ -40,16 +40,41 @@ const CodeEditor = () => {
     }
 
     setAiLoading(true);
-    setTimeout(() => {
-      const generatedCode = `// Код сгенерирован ИИ по запросу: "${aiPrompt}"\n\nfunction generatedFunction() {\n  // Здесь будет ваш код\n  console.log('Функция создана ИИ');\n  return 'Success';\n}\n\ngeneratedFunction();`;
-      setCode(generatedCode);
-      setAiLoading(false);
+    
+    try {
+      const response = await fetch(
+        'https://functions.poehali.dev/9022cc63-3649-4249-821b-bbb6276aef84',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: aiPrompt,
+            language: language
+          })
+        }
+      );
+
+      const data = await response.json();
+      
+      if (response.ok && data.code) {
+        setCode(data.code);
+        toast({
+          title: data.demo ? "Код сгенерирован (Demo)" : "Код сгенерирован!",
+          description: data.demo ? "Для полноценной работы добавьте OPENAI_API_KEY" : "ИИ создал код по вашему запросу",
+        });
+        setAiPrompt('');
+      } else {
+        throw new Error(data.error || 'Ошибка генерации');
+      }
+    } catch (error: any) {
       toast({
-        title: "Код сгенерирован!",
-        description: "ИИ создал код по вашему запросу",
+        title: "Ошибка",
+        description: error.message || "Не удалось сгенерировать код",
+        variant: "destructive",
       });
-      setAiPrompt('');
-    }, 2000);
+    } finally {
+      setAiLoading(false);
+    }
   };
 
   const handleRunCode = () => {
