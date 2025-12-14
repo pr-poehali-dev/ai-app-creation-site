@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
+import { createFreeKassaPaymentUrl, generateOrderId } from '@/utils/freekassa';
 
 const Index = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -95,7 +96,27 @@ const Index = () => {
 
   const handlePayment = (planId: string) => {
     setSelectedPlan(planId);
-    alert(`Переход к оплате тарифа через FreeKassa.\nВыбран план: ${plans.find(p => p.id === planId)?.name}`);
+    const selectedPlan = plans.find(p => p.id === planId);
+    
+    if (!selectedPlan) return;
+
+    const amountMap: Record<string, number> = {
+      'basic': 990,
+      'pro': 2990,
+      'enterprise': 9990
+    };
+
+    const orderId = generateOrderId();
+    const paymentUrl = createFreeKassaPaymentUrl({
+      merchantId: 'YOUR_MERCHANT_ID',
+      amount: amountMap[planId],
+      orderId: orderId,
+      secretKey: 'YOUR_SECRET_KEY',
+      description: `Тариф ${selectedPlan.name} - AI Dev Platform`,
+      email: ''
+    });
+
+    window.open(paymentUrl, '_blank');
   };
 
   return (
@@ -113,8 +134,8 @@ const Index = () => {
             <a href="#features" className="text-foreground/80 hover:text-foreground transition-colors">Возможности</a>
             <a href="#pricing" className="text-foreground/80 hover:text-foreground transition-colors">Тарифы</a>
             <a href="#projects" className="text-foreground/80 hover:text-foreground transition-colors">Проекты</a>
-            <Button variant="outline" size="sm">Войти</Button>
-            <Button size="sm" className="glow">Начать</Button>
+            <Button variant="outline" size="sm" onClick={() => window.location.href = '/login'}>Войти</Button>
+            <Button size="sm" className="glow" onClick={() => window.location.href = '/register'}>Начать</Button>
           </nav>
           <Button variant="ghost" size="icon" className="md:hidden">
             <Icon name="Menu" size={24} />
@@ -135,7 +156,7 @@ const Index = () => {
           Превратите идеи в готовые приложения за минуты. Искусственный интеллект напишет код, настроит базу данных и задеплоит проект автоматически.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Button size="lg" className="text-lg px-8 hover-glow">
+          <Button size="lg" className="text-lg px-8 hover-glow" onClick={() => window.location.href = '/register'}>
             <Icon name="Play" size={20} className="mr-2" />
             Попробовать бесплатно
           </Button>
