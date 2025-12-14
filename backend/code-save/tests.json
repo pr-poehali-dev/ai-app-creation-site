@@ -1,0 +1,25 @@
+{
+  "tests": [
+    {
+      "name": "Save code - missing project_id",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "code": "console.log('test');"
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "project_id required"
+      }
+    },
+    {
+      "name": "Get history - missing project_id",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "project_id required"
+      }
+    }
+  ]
+}

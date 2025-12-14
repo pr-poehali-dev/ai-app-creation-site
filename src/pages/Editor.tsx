@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Editor from '@monaco-editor/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,14 +9,21 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
+import VersionHistory from '@/components/VersionHistory';
 
 const CodeEditor = () => {
+  const [searchParams] = useSearchParams();
+  const projectId = searchParams.get('project');
+  
   const [code, setCode] = useState(`function greet(name) {\n  return \`Hello, \${name}! 🚀\`;\n}\n\nconsole.log(greet('Developer'));`);
   const [language, setLanguage] = useState('javascript');
   const [aiPrompt, setAiPrompt] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
   const [output, setOutput] = useState('');
   const [user, setUser] = useState<any>(null);
+  const [saving, setSaving] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const saveTimerRef = useRef<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -24,10 +31,80 @@ const CodeEditor = () => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+      if (projectId) {
+        loadProjectCode();
+      }
     } else {
       navigate('/login');
     }
-  }, [navigate]);
+  }, [navigate, projectId]);
+
+  useEffect(() => {
+    if (projectId && code) {
+      if (saveTimerRef.current) {
+        clearTimeout(saveTimerRef.current);
+      }
+      
+      saveTimerRef.current = setTimeout(() => {
+        saveCode();
+      }, 2000);
+    }
+    
+    return () => {
+      if (saveTimerRef.current) {
+        clearTimeout(saveTimerRef.current);
+      }
+    };
+  }, [code, projectId]);
+
+  const loadProjectCode = async () => {
+    if (!projectId) return;
+    
+    try {
+      const response = await fetch(
+        `https://functions.poehali.dev/bfd0ac98-4e04-4b43-9b93-0fcc836f6d5e?project_id=${projectId}`
+      );
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.current_code) {
+          setCode(data.current_code);
+          setLastSaved(data.updated_at ? new Date(data.updated_at) : null);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load project code:', error);
+    }
+  };
+
+  const saveCode = async () => {
+    if (!projectId || saving) return;
+    
+    setSaving(true);
+    
+    try {
+      const response = await fetch(
+        'https://functions.poehali.dev/bfd0ac98-4e04-4b43-9b93-0fcc836f6d5e',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            project_id: projectId,
+            code: code,
+            change_message: 'Автосохранение'
+          })
+        }
+      );
+      
+      if (response.ok) {
+        setLastSaved(new Date());
+      }
+    } catch (error) {
+      console.error('Failed to save code:', error);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const handleAIGenerate = async () => {
     if (!aiPrompt.trim()) {
@@ -139,6 +216,25 @@ const CodeEditor = () => {
             </Badge>
           </div>
           <div className="flex items-center gap-3">
+            {projectId && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                {saving ? (
+                  <>
+                    <Icon name="Loader2" size={14} className="animate-spin" />
+                    <span>Сохранение...</span>
+                  </>
+                ) : lastSaved ? (
+                  <>
+                    <Icon name="Check" size={14} className="text-green-400" />
+                    <span>Сохранено {lastSaved.toLocaleTimeString()}</span>
+                  </>
+                ) : null}
+              </div>
+            )}
+            <Button variant="outline" size="sm" onClick={() => navigate('/dashboard')}>
+              <Icon name="FolderKanban" size={16} className="mr-2" />
+              Проекты
+            </Button>
             <Button variant="outline" size="sm" onClick={() => navigate('/')}>
               <Icon name="Home" size={16} className="mr-2" />
               Главная
@@ -276,6 +372,13 @@ const CodeEditor = () => {
               </CardContent>
             </Card>
 
+{projectId && (
+              <VersionHistory 
+                projectId={projectId} 
+                onRestore={(restoredCode) => setCode(restoredCode)}
+              />
+            )}
+
             <Card className="border-primary/30 bg-card/50 backdrop-blur">
               <CardHeader>
                 <CardTitle className="text-base flex items-center gap-2">
@@ -284,21 +387,65 @@ const CodeEditor = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <Button variant="outline" className="w-full justify-start" size="sm">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start" 
+                  size="sm"
+                  onClick={() => {
+                    const blob = new Blob([code], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `code.${language}`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    toast({
+                      title: "Экспорт выполнен",
+                      description: "Код сохранен в файл",
+                    });
+                  }}
+                >
                   <Icon name="FileDown" size={16} className="mr-2" />
                   Экспорт кода
                 </Button>
-                <Button variant="outline" className="w-full justify-start" size="sm">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start" 
+                  size="sm"
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    toast({
+                      title: "Ссылка скопирована",
+                      description: "Поделитесь ссылкой на проект",
+                    });
+                  }}
+                >
                   <Icon name="Share2" size={16} className="mr-2" />
                   Поделиться проектом
                 </Button>
-                <Button variant="outline" className="w-full justify-start" size="sm">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start" 
+                  size="sm"
+                  onClick={() => {
+                    window.open('https://github.com/new', '_blank');
+                    toast({
+                      title: "GitHub",
+                      description: "Создайте репозиторий и загрузите код вручную",
+                    });
+                  }}
+                >
                   <Icon name="GitBranch" size={16} className="mr-2" />
                   Отправить в GitHub
                 </Button>
-                <Button variant="outline" className="w-full justify-start" size="sm">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start" 
+                  size="sm"
+                  disabled
+                >
                   <Icon name="Rocket" size={16} className="mr-2" />
-                  Задеплоить
+                  Задеплоить (скоро)
                 </Button>
               </CardContent>
             </Card>
