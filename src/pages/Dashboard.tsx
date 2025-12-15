@@ -67,7 +67,7 @@ const Dashboard = () => {
     if (!newProject.name.trim()) {
       toast({
         title: "Ошибка",
-        description: "Введите название проекта",
+        description: "Введите название сайта и описание",
         variant: "destructive",
       });
       return;
@@ -90,8 +90,8 @@ const Dashboard = () => {
       
       if (response.ok) {
         toast({
-          title: "Проект создан!",
-          description: `${newProject.name} успешно создан`,
+          title: "Сайт сгенерирован! 🎉",
+          description: `${newProject.name} готов к редактированию`,
         });
         setProjects([data.project, ...projects]);
         setDialogOpen(false);
@@ -100,7 +100,7 @@ const Dashboard = () => {
     } catch (error) {
       toast({
         title: "Ошибка",
-        description: "Не удалось создать проект",
+        description: "Не удалось сгенерировать сайт",
         variant: "destructive",
       });
     }
@@ -176,47 +176,47 @@ const Dashboard = () => {
               Добро пожаловать, {user.name}! 👋
             </h1>
             <p className="text-muted-foreground">
-              У вас {projects.length} {projects.length === 1 ? 'проект' : 'проектов'}
+              У вас {projects.length} {projects.length === 1 ? 'сайт' : 'сайтов'}
             </p>
           </div>
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
               <Button size="lg" className="glow">
-                <Icon name="Plus" size={20} className="mr-2" />
-                Новый проект
+                <Icon name="Wand2" size={20} className="mr-2" />
+                Создать сайт
               </Button>
             </DialogTrigger>
             <DialogContent className="bg-card border-primary/30">
               <DialogHeader>
-                <DialogTitle className="gradient-text">Создать новый проект</DialogTitle>
+                <DialogTitle className="gradient-text">Создать новый сайт</DialogTitle>
                 <DialogDescription>
-                  Заполните информацию о проекте
+                  Опишите какой сайт вы хотите создать, ИИ сделает всё остальное
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="name">Название проекта</Label>
+                  <Label htmlFor="name">Название сайта</Label>
                   <Input
                     id="name"
-                    placeholder="Мой новый проект"
+                    placeholder="Лендинг для кофейни"
                     value={newProject.name}
                     onChange={(e) => setNewProject({ ...newProject, name: e.target.value })}
                     className="bg-background/50"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="description">Описание</Label>
+                  <Label htmlFor="description">Опишите что должен делать сайт</Label>
                   <Textarea
                     id="description"
-                    placeholder="Краткое описание проекта..."
+                    placeholder="Сайт с меню, фотографиями кофе, формой бронирования столика и контактами..."
                     value={newProject.description}
                     onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
                     className="bg-background/50"
-                    rows={3}
+                    rows={4}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="language">Язык программирования</Label>
+                  <Label htmlFor="language">Стиль дизайна</Label>
                   <Select
                     value={newProject.language}
                     onValueChange={(value) => setNewProject({ ...newProject, language: value })}
@@ -225,17 +225,17 @@ const Dashboard = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="javascript">🟨 JavaScript</SelectItem>
-                      <SelectItem value="typescript">🔷 TypeScript</SelectItem>
-                      <SelectItem value="python">🐍 Python</SelectItem>
-                      <SelectItem value="html">🌐 HTML</SelectItem>
-                      <SelectItem value="css">🎨 CSS</SelectItem>
+                      <SelectItem value="javascript">🌟 Современный</SelectItem>
+                      <SelectItem value="typescript">🎭 Минимализм</SelectItem>
+                      <SelectItem value="python">🎨 Креативный</SelectItem>
+                      <SelectItem value="html">🏪 Корпоративный</SelectItem>
+                      <SelectItem value="css">✨ Элегантный</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                <Button onClick={createProject} className="w-full">
-                  <Icon name="Rocket" size={18} className="mr-2" />
-                  Создать проект
+                <Button onClick={createProject} className="w-full glow">
+                  <Icon name="Wand2" size={18} className="mr-2" />
+                  Генерировать сайт
                 </Button>
               </div>
             </DialogContent>
@@ -250,11 +250,11 @@ const Dashboard = () => {
           <Card className="border-primary/30 bg-card/50 backdrop-blur border-dashed">
             <CardContent className="flex flex-col items-center justify-center py-20">
               <Icon name="FolderOpen" size={64} className="text-muted-foreground mb-4" />
-              <h3 className="text-2xl font-semibold mb-2">Пока нет проектов</h3>
-              <p className="text-muted-foreground mb-6">Создайте свой первый проект с помощью ИИ</p>
+              <h3 className="text-2xl font-semibold mb-2">Пока нет сайтов</h3>
+              <p className="text-muted-foreground mb-6">Опишите идею, ИИ сгенерирует готовый сайт за 60 секунд</p>
               <Button onClick={() => setDialogOpen(true)} className="glow">
-                <Icon name="Plus" size={20} className="mr-2" />
-                Создать проект
+                <Icon name="Wand2" size={20} className="mr-2" />
+                Создать сайт
               </Button>
             </CardContent>
           </Card>

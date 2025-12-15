@@ -110,7 +110,7 @@ const CodeEditor = () => {
     if (!aiPrompt.trim()) {
       toast({
         title: "Ошибка",
-        description: "Введите описание кода",
+        description: "Опишите что изменить на сайте",
         variant: "destructive",
       });
       return;
@@ -136,8 +136,8 @@ const CodeEditor = () => {
       if (response.ok && data.code) {
         setCode(data.code);
         toast({
-          title: data.demo ? "Код сгенерирован (Demo)" : "Код сгенерирован!",
-          description: data.demo ? "Для полноценной работы добавьте OPENAI_API_KEY" : "ИИ создал код по вашему запросу",
+          title: data.demo ? "Изменения применены (Demo)" : "Сайт обновлён!",
+          description: data.demo ? "Для полной работы добавьте OPENAI_API_KEY" : "ИИ обновил дизайн по вашему запросу",
         });
         setAiPrompt('');
       } else {
@@ -146,7 +146,7 @@ const CodeEditor = () => {
     } catch (error: any) {
       toast({
         title: "Ошибка",
-        description: error.message || "Не удалось сгенерировать код",
+        description: error.message || "Не удалось применить изменения",
         variant: "destructive",
       });
     } finally {
@@ -208,7 +208,7 @@ const CodeEditor = () => {
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                 <Icon name="Code2" size={20} className="text-white" />
               </div>
-              <span className="text-xl font-bold font-montserrat gradient-text">AI Editor</span>
+              <span className="text-xl font-bold font-montserrat gradient-text">Редактор сайтов</span>
             </div>
             <Badge variant="outline" className="hidden md:flex">
               <Icon name="Sparkles" size={14} className="mr-1" />
@@ -260,8 +260,8 @@ const CodeEditor = () => {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2">
-                    <Icon name="FileCode" size={20} />
-                    Редактор кода
+                    <Icon name="Layout" size={20} />
+                    Визуальный редактор
                   </CardTitle>
                   <div className="flex items-center gap-2">
                     <Select value={language} onValueChange={setLanguage}>
@@ -276,9 +276,9 @@ const CodeEditor = () => {
                         ))}
                       </SelectContent>
                     </Select>
-                    <Button size="sm" onClick={handleRunCode}>
-                      <Icon name="Play" size={16} className="mr-2" />
-                      Запустить
+                    <Button size="sm" variant="outline">
+                      <Icon name="Eye" size={16} className="mr-2" />
+                      Предпросмотр
                     </Button>
                   </div>
                 </div>
@@ -308,17 +308,18 @@ const CodeEditor = () => {
             <Card className="border-primary/30 bg-card/50 backdrop-blur">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Icon name="Terminal" size={20} />
-                  Вывод
+                  <Icon name="Globe" size={20} />
+                  Предпросмотр сайта
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="bg-[#1e1e1e] rounded-lg p-4 font-mono text-sm min-h-[150px]">
-                  {output ? (
-                    <pre className="text-green-400 whitespace-pre-wrap">{output}</pre>
-                  ) : (
-                    <div className="text-muted-foreground">Нажмите "Запустить" для выполнения кода</div>
-                  )}
+                  <div className="bg-white rounded-lg border-2 border-border h-full min-h-[400px] flex items-center justify-center">
+                    <div className="text-center text-muted-foreground">
+                      <Icon name="Globe" size={48} className="mx-auto mb-4 opacity-50" />
+                      <p>Здесь будет отображаться ваш сайт</p>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -328,14 +329,14 @@ const CodeEditor = () => {
             <Card className="border-primary/30 bg-gradient-to-br from-primary/10 to-secondary/10 backdrop-blur">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Icon name="Sparkles" size={20} />
-                  ИИ Ассистент
+                  <Icon name="Wand2" size={20} />
+                  ИИ Дизайнер
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
                   <Textarea
-                    placeholder="Опишите что нужно создать: 'функция для сортировки массива', 'компонент кнопки React' и т.д."
+                    placeholder="Опишите что изменить: 'сделай заголовок больше', 'добавь форму контактов', 'измени цвет на синий' и т.д."
                     value={aiPrompt}
                     onChange={(e) => setAiPrompt(e.target.value)}
                     rows={5}
@@ -355,7 +356,7 @@ const CodeEditor = () => {
                   ) : (
                     <>
                       <Icon name="Wand2" size={18} className="mr-2" />
-                      Сгенерировать код
+                      Применить изменения
                     </>
                   )}
                 </Button>
@@ -400,13 +401,13 @@ const CodeEditor = () => {
                     a.click();
                     URL.revokeObjectURL(url);
                     toast({
-                      title: "Экспорт выполнен",
-                      description: "Код сохранен в файл",
+                      title: "Сайт скачан",
+                      description: "HTML файл сохранён на вашем компьютере",
                     });
                   }}
                 >
-                  <Icon name="FileDown" size={16} className="mr-2" />
-                  Экспорт кода
+                  <Icon name="Download" size={16} className="mr-2" />
+                  Скачать HTML
                 </Button>
                 <Button 
                   variant="outline" 
@@ -416,12 +417,12 @@ const CodeEditor = () => {
                     navigator.clipboard.writeText(window.location.href);
                     toast({
                       title: "Ссылка скопирована",
-                      description: "Поделитесь ссылкой на проект",
+                      description: "Поделитесь ссылкой на сайт",
                     });
                   }}
                 >
                   <Icon name="Share2" size={16} className="mr-2" />
-                  Поделиться проектом
+                  Поделиться сайтом
                 </Button>
                 <Button 
                   variant="outline" 
@@ -444,8 +445,8 @@ const CodeEditor = () => {
                   size="sm"
                   disabled
                 >
-                  <Icon name="Rocket" size={16} className="mr-2" />
-                  Задеплоить (скоро)
+                  <Icon name="Globe" size={16} className="mr-2" />
+                  Опубликовать (скоро)
                 </Button>
               </CardContent>
             </Card>
