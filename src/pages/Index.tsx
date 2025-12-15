@@ -12,49 +12,49 @@ const Index = () => {
   const plans = [
     {
       id: 'basic',
-      name: 'Базовый',
-      price: '990₽',
+      name: 'Стартовый',
+      price: '490₽',
       period: '/месяц',
-      description: 'Для начинающих разработчиков',
+      description: 'Для личных проектов',
       features: [
-        'До 3 проектов',
-        '10 запросов к ИИ в день',
-        'Базовые шаблоны',
-        'Поддержка Email',
-        'Экспорт кода'
+        'До 3 сайтов',
+        '50 ИИ-генераций в месяц',
+        'Готовые шаблоны дизайна',
+        'Бесплатный домен .site',
+        'Базовая поддержка'
       ],
       popular: false
     },
     {
       id: 'pro',
-      name: 'Про',
-      price: '2990₽',
+      name: 'Бизнес',
+      price: '1990₽',
       period: '/месяц',
-      description: 'Для профессионалов',
+      description: 'Для коммерческих проектов',
       features: [
-        'Безлимитные проекты',
-        'Безлимитные запросы к ИИ',
-        'Все шаблоны + премиум',
-        'Приоритетная поддержка 24/7',
-        'GitHub интеграция',
-        'API доступ',
-        'Командная работа'
+        'Безлимит сайтов',
+        'Неограниченные ИИ-генерации',
+        'Премиум шаблоны и компоненты',
+        'Свой домен + SSL сертификат',
+        'SEO оптимизация',
+        'Поддержка 24/7',
+        'Аналитика посещений'
       ],
       popular: true
     },
     {
       id: 'enterprise',
-      name: 'Энтерпрайз',
-      price: 'От 9990₽',
+      name: 'Агентство',
+      price: 'От 4990₽',
       period: '/месяц',
-      description: 'Для больших команд',
+      description: 'Для веб-студий',
       features: [
-        'Всё из Про',
-        'Выделенный сервер',
-        'Кастомные модели ИИ',
-        'SLA 99.9%',
+        'Всё из Бизнес',
+        'Белая метка (White Label)',
+        'API для интеграций',
+        'Приоритетная генерация',
+        'Мультиязычность сайтов',
         'Персональный менеджер',
-        'Корпоративная безопасность',
         'Обучение команды'
       ],
       popular: false
@@ -63,34 +63,34 @@ const Index = () => {
 
   const features = [
     {
-      icon: 'Sparkles',
-      title: 'ИИ-Генерация кода',
-      description: 'Создавайте приложения на React, Vue, Angular через естественный язык'
+      icon: 'Wand2',
+      title: 'Создание за 60 секунд',
+      description: 'Опишите идею сайта — ИИ сгенерирует полноценный дизайн и функционал'
     },
     {
-      icon: 'Code2',
-      title: 'Умный редактор',
-      description: 'Интеллектуальные подсказки, автодополнение и исправление ошибок'
+      icon: 'Palette',
+      title: 'Умный дизайнер',
+      description: 'ИИ подберёт цвета, шрифты, анимации под ваш стиль и целевую аудиторию'
+    },
+    {
+      icon: 'Smartphone',
+      title: 'Адаптивная вёрстка',
+      description: 'Все сайты автоматически адаптируются под мобильные, планшеты и десктоп'
     },
     {
       icon: 'Zap',
-      title: 'Мгновенный деплой',
-      description: 'Публикуйте ваши проекты в облако одним кликом'
+      title: 'Публикация в 1 клик',
+      description: 'Сайт мгновенно выходит в интернет с SSL сертификатом и быстрым хостингом'
     },
     {
-      icon: 'Database',
-      title: 'База данных',
-      description: 'Автоматическая настройка и управление PostgreSQL, MongoDB'
+      icon: 'Search',
+      title: 'SEO оптимизация',
+      description: 'ИИ автоматически настраивает метатеги, структуру и скорость для поисковиков'
     },
     {
-      icon: 'GitBranch',
-      title: 'Git интеграция',
-      description: 'Синхронизация с GitHub, GitLab, версионирование'
-    },
-    {
-      icon: 'Users',
-      title: 'Командная работа',
-      description: 'Совместная разработка в режиме реального времени'
+      icon: 'MessageSquare',
+      title: 'Правки голосом',
+      description: 'Скажите что изменить — ИИ тут же обновит дизайн, текст или функционал'
     }
   ];
 
@@ -145,15 +145,15 @@ const Index = () => {
 
       <section className="container mx-auto px-4 py-20 text-center animate-fade-in">
         <Badge className="mb-4 bg-primary/20 text-primary border-primary/30 hover:bg-primary/30">
-          🚀 Версия 2.0 — Теперь с GPT-4 Turbo
+          ✨ Новинка — ИИ-генерация сайтов за 60 секунд
         </Badge>
         <h1 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 gradient-text animate-slide-up">
-          Создавайте приложения
+          Создайте сайт мечты
           <br />
-          силой мысли
+          за одну минуту
         </h1>
         <p className="text-xl text-foreground/70 mb-8 max-w-2xl mx-auto">
-          Превратите идеи в готовые приложения за минуты. Искусственный интеллект напишет код, настроит базу данных и задеплоит проект автоматически.
+          Просто опишите, какой сайт вам нужен. ИИ создаст дизайн, напишет код, добавит анимации и опубликует в интернет — всё автоматически.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <Button size="lg" className="text-lg px-8 hover-glow" onClick={() => window.location.href = '/register'}>
@@ -183,32 +183,37 @@ const Index = () => {
                   <div className="flex">
                     <span className="text-muted-foreground mr-4">1</span>
                     <span className="text-purple-400">const</span>
-                    <span className="text-foreground ml-2">createApp</span>
+                    <span className="text-foreground ml-2">prompt</span>
                     <span className="text-foreground ml-2">=</span>
-                    <span className="text-foreground ml-2">(</span>
-                    <span className="text-orange-400">prompt</span>
-                    <span className="text-foreground">)</span>
-                    <span className="text-foreground ml-2">=&gt;</span>
-                    <span className="text-foreground ml-2">{'{'}</span>
+                    <span className="text-green-400 ml-2">&quot;Лендинг для кофейни с меню и формой брони&quot;</span>
+                    <span className="text-foreground">;</span>
                   </div>
-                  <div className="flex ml-4">
+                  <div className="flex">
                     <span className="text-muted-foreground mr-4">2</span>
+                  </div>
+                  <div className="flex">
+                    <span className="text-muted-foreground mr-4">3</span>
                     <span className="text-blue-400">AI</span>
                     <span className="text-foreground">.</span>
-                    <span className="text-yellow-300">generate</span>
+                    <span className="text-yellow-300">generateWebsite</span>
                     <span className="text-foreground">(</span>
                     <span className="text-orange-400">prompt</span>
                     <span className="text-foreground">);</span>
                   </div>
-                  <div className="flex ml-4">
-                    <span className="text-muted-foreground mr-4">3</span>
-                    <span className="text-purple-400">return</span>
-                    <span className="text-green-400 ml-2">&quot;Готовое приложение 🚀&quot;</span>
-                    <span className="text-foreground">;</span>
-                  </div>
                   <div className="flex">
                     <span className="text-muted-foreground mr-4">4</span>
-                    <span className="text-foreground">{'}'}</span>
+                    <span className="text-muted-foreground ml-2">// ✨ Создан дизайн, вёрстка, анимации...</span>
+                  </div>
+                  <div className="flex">
+                    <span className="text-muted-foreground mr-4">5</span>
+                    <span className="text-muted-foreground ml-2">// 🚀 Опубликован на custom-coffee.site</span>
+                  </div>
+                  <div className="flex mt-4">
+                    <span className="text-muted-foreground mr-4">6</span>
+                  </div>
+                  <div className="flex">
+                    <span className="text-muted-foreground mr-4">7</span>
+                    <span className="text-green-400">// ⚡ Сайт готов за 60 секунд, без единой строчки кода!</span>
                   </div>
                 </div>
               </div>
@@ -221,10 +226,10 @@ const Index = () => {
         <div className="text-center mb-16">
           <Badge className="mb-4 bg-secondary/20 text-secondary border-secondary/30">Возможности</Badge>
           <h2 className="text-4xl md:text-5xl font-bold font-montserrat mb-4">
-            Всё для разработки
+            Создавайте любые сайты
           </h2>
           <p className="text-xl text-foreground/70">
-            Полный набор инструментов для создания современных приложений
+            От лендингов до интернет-магазинов — всё через диалог с ИИ
           </p>
         </div>
 
@@ -308,12 +313,12 @@ const Index = () => {
 
       <section id="projects" className="container mx-auto px-4 py-20">
         <div className="text-center mb-16">
-          <Badge className="mb-4 bg-secondary/20 text-secondary border-secondary/30">Проекты</Badge>
+          <Badge className="mb-4 bg-secondary/20 text-secondary border-secondary/30">Готовые решения</Badge>
           <h2 className="text-4xl md:text-5xl font-bold font-montserrat mb-4">
-            Начните с шаблона
+            Шаблоны сайтов
           </h2>
           <p className="text-xl text-foreground/70">
-            Или создайте свой проект с нуля
+            Начните с шаблона или создайте уникальный дизайн
           </p>
         </div>
 
@@ -331,10 +336,10 @@ const Index = () => {
           
           <TabsContent value="templates" className="space-y-4">
             {[
-              { name: 'E-commerce магазин', tech: 'React + Stripe', icon: 'ShoppingCart' },
-              { name: 'CRM система', tech: 'Next.js + PostgreSQL', icon: 'Users' },
-              { name: 'Блог платформа', tech: 'Vue + MongoDB', icon: 'BookOpen' },
-              { name: 'Dashboard аналитики', tech: 'React + Charts', icon: 'BarChart3' }
+              { name: 'Лендинг для бизнеса', tech: 'Современный дизайн', icon: 'Sparkles' },
+              { name: 'Интернет-магазин', tech: 'С каталогом и корзиной', icon: 'ShoppingCart' },
+              { name: 'Портфолио', tech: 'Галерея работ + контакты', icon: 'Briefcase' },
+              { name: 'Корпоративный сайт', tech: 'Многостраничный + SEO', icon: 'Building2' }
             ].map((template, index) => (
               <Card key={index} className="border-primary/20 bg-card/50 hover:border-primary/50 transition-all group cursor-pointer">
                 <CardContent className="flex items-center justify-between p-6">
@@ -359,11 +364,11 @@ const Index = () => {
             <Card className="border-primary/20 bg-card/50 border-dashed">
               <CardContent className="flex flex-col items-center justify-center py-16">
                 <Icon name="FolderPlus" size={64} className="text-muted-foreground mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Создайте первый проект</h3>
-                <p className="text-muted-foreground mb-6">Опишите что хотите создать, ИИ сделает всё остальное</p>
+                <h3 className="text-xl font-semibold mb-2">Создайте первый сайт</h3>
+                <p className="text-muted-foreground mb-6">Опишите идею, ИИ сгенерирует дизайн за 60 секунд</p>
                 <Button className="glow">
-                  <Icon name="Plus" size={20} className="mr-2" />
-                  Новый проект
+                  <Icon name="Wand2" size={20} className="mr-2" />
+                  Сгенерировать сайт
                 </Button>
               </CardContent>
             </Card>
@@ -378,12 +383,12 @@ const Index = () => {
               Готовы начать?
             </h2>
             <p className="text-xl text-foreground/70 mb-8 max-w-2xl mx-auto">
-              Присоединяйтесь к тысячам разработчиков, которые уже создают приложения быстрее в 10 раз
+              Присоединяйтесь к тысячам пользователей, которые уже создают сайты без программирования
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="text-lg px-8 hover-glow">
-                <Icon name="Sparkles" size={20} className="mr-2" />
-                Начать бесплатно
+              <Button size="lg" className="text-lg px-8 hover-glow" onClick={() => window.location.href = '/register'}>
+                <Icon name="Wand2" size={20} className="mr-2" />
+                Создать сайт бесплатно
               </Button>
               <Button size="lg" variant="outline" className="text-lg px-8">
                 <Icon name="MessageCircle" size={20} className="mr-2" />
@@ -402,10 +407,10 @@ const Index = () => {
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                   <Icon name="Rocket" size={20} className="text-white" />
                 </div>
-                <span className="text-xl font-bold font-montserrat">AI Dev</span>
+                <span className="text-xl font-bold font-montserrat">WebSynapse</span>
               </div>
               <p className="text-sm text-muted-foreground">
-                Разработка приложений через искусственный интеллект
+                Создание сайтов через искусственный интеллект
               </p>
             </div>
             <div>
