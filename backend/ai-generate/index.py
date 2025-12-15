@@ -76,9 +76,12 @@ generatedFunction();"""
                 }
             
             try:
-                import openai
+                from openai import OpenAI
                 
-                client = openai.OpenAI(api_key=openai_key)
+                client = OpenAI(
+                    api_key=openai_key,
+                    timeout=30.0
+                )
                 
                 system_prompt = f"You are a code generation assistant. Generate clean, well-documented {language} code based on user requests. Only return the code, no explanations."
                 
